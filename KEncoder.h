@@ -2,11 +2,20 @@
 
 #define K_ENCODER_H_
 
-struct KEncoder
+#include "getopt.h"
+#include "InputParameter.h"
+
+class KEncoder
 {
-    void init(char **argv);
+public:
+    void init(int argc, char **argv);
+    KEncoder(InputParameter *pParameter);
 
+private:
+    char* mInputFileName;
+    char* mOutputFileName;
 
+    
 };
 
 #endif

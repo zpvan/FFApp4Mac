@@ -2,7 +2,14 @@
 
 #include "stdio.h"
 
-void KEncoder::init(char **argv)
+KEncoder::KEncoder(InputParameter *pParameter)
+    : mInputFileName(pParameter->mInputFileName),
+    mOutputFileName(pParameter->mOutputFileName)
 {
-    printf("hello KEncoder\n");
+    
+}
+
+void KEncoder::init(int argc, char **argv)
+{
+    
 }
