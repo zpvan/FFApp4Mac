@@ -5,7 +5,7 @@
 ##########################################
 
 LIBDIR := ffmpeg-3.4.1-macos64-shared/bin/
-LIBS := avcodec.57
+LIBS := avutil.55 avformat.57
 INCLUDES := ffmpeg-3.4.1-macos64-dev/include/
 TARGET := main
 TARGETDIR := $(LIBDIR)
@@ -24,7 +24,7 @@ RM-F := rm -f
 all: $(TARGET)
 
 main: Main.cpp
-	$(CC) Main.cpp -o $(addprefix $(TARGETDIR), $(TARGET)) -L$(LIBDIR) -l$(LIBS) -I$(INCLUDES)
+	$(CC) Main.cpp -o $(addprefix $(TARGETDIR), $(TARGET)) $(addprefix -L, $(LIBDIR)) $(addprefix -l, $(LIBS)) -I$(INCLUDES)
 
 clean:
 	$(RM-F) *.o
