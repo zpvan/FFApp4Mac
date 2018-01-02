@@ -45,13 +45,13 @@ KErrors KEncoder::configure(InputParameter *pParameter)
     mWidth = pParameter->mWidth;
     mHeight = pParameter->mHeight;
 
-    pFileIn = fopen(mInputFileName, "rb");
+    pFileIn = fopen(mInputFileName, "rb+");
     if (!pFileIn)
     {
         return ERROR_CAN_NOT_OPEN_INPUT_FILE;
     }
 
-    pFileOut = fopen(mOutputFileName, "wb");
+    pFileOut = fopen(mOutputFileName, "wb+");
     if (!pFileOut)
     {
         return ERROR_CAN_NOT_OPEN_OUTPUT_FILE;
