@@ -81,6 +81,8 @@ int main(int argc, char **argv)
                         strncpy(height, resolution + widthLength + 1, length - widthLength - 1);
                         height[length - widthLength - 1] = '\0';
                         printf("h: %s\n", height);
+                        parameter.mWidth = atoi(width);
+                        parameter.mHeight = atoi(height);
                     }
                 }
                 
@@ -102,7 +104,7 @@ int main(int argc, char **argv)
         {
             printf("配置编码器失败, error code: %d\n", res);
         }
-        
+
         if (encoder != NULL)
         {
             delete encoder;

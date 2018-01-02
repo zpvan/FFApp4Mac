@@ -57,5 +57,6 @@ KErrors KEncoder::configure(InputParameter *pParameter)
         return ERROR_CAN_NOT_OPEN_OUTPUT_FILE;
     }
 
+    printf("configure[w: %d, h: %d, br: %d, fr: %d, fc: %d]\n", mWidth, mHeight, mBitRate, mFrameRate, mFrameCount);
     return NO_ERROR;
 }
