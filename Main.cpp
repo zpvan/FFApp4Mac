@@ -5,6 +5,7 @@
 
 #include "KEncoder.h"
 #include "InputParameter.h"
+#include "KErrors.h"
 
 extern "C"
 {
@@ -90,7 +91,17 @@ int main(int argc, char **argv)
     if (!strcmp(ENC, func))
     {
         printf("启动编码器\n");
-        KEncoder *encoder = new KEncoder(&parameter);
+        KErrors res = NO_ERROR;
+        KEncoder *encoder = new KEncoder();
+        res = encoder->configure(&parameter);
+        if (!res)
+        {
+            printf("配置编码器成功\n");
+        } 
+        else 
+        {
+            printf("配置编码器失败\n");
+        }
     }
     av_register_all();
 }

@@ -4,18 +4,22 @@
 
 #include "getopt.h"
 #include "InputParameter.h"
+#include "KErrors.h"
 
 class KEncoder
 {
 public:
-    void init(int argc, char **argv);
-    KEncoder(InputParameter *pParameter);
+    KEncoder();
+    KErrors configure(InputParameter *pParameter);
 
 private:
     char* mInputFileName;
     char* mOutputFileName;
-
-    
+    int mBitRate;
+    int mFrameRate;
+    int mFrameCount;
+    int mWidth;
+    int mHeight;
 };
 
 #endif
