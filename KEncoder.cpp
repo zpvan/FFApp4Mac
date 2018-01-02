@@ -9,9 +9,26 @@ KEncoder::KEncoder() :
     mFrameRate(0),
     mFrameCount(0),
     mWidth(0),
-    mHeight(0)
+    mHeight(0),
+    pFileIn(NULL),
+    pFileOut(NULL)
 {
+    printf("new KEncoder %p\n", this);
+}
 
+KEncoder::~KEncoder()
+{
+    printf("delete KEncoder %p\n", this);
+    if (!pFileIn)
+    {
+        fclose(pFileIn);
+        pFileIn = NULL;
+    }
+    if (!pFileOut)
+    {
+        fclose(pFileOut);
+        pFileOut = NULL;
+    }
 }
 
 KErrors KEncoder::configure(InputParameter *pParameter)
@@ -27,6 +44,18 @@ KErrors KEncoder::configure(InputParameter *pParameter)
     mFrameCount = pParameter->mFrameCount;
     mWidth = pParameter->mWidth;
     mHeight = pParameter->mHeight;
+
+    pFileIn = fopen(mInputFileName, "rb");
+    if (!pFileIn)
+    {
+        return ERROR_CAN_NOT_OPEN_INPUT_FILE;
+    }
+
+    pFileOut = fopen(mOutputFileName, "wb");
+    if (!pFileOut)
+    {
+        return ERROR_CAN_NOT_OPEN_OUTPUT_FILE;
+    }
 
     return NO_ERROR;
 }

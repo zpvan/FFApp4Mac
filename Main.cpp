@@ -94,13 +94,19 @@ int main(int argc, char **argv)
         KErrors res = NO_ERROR;
         KEncoder *encoder = new KEncoder();
         res = encoder->configure(&parameter);
-        if (!res)
+        if (res == NO_ERROR)
         {
             printf("配置编码器成功\n");
         } 
         else 
         {
-            printf("配置编码器失败\n");
+            printf("配置编码器失败, error code: %d\n", res);
+        }
+        
+        if (encoder != NULL)
+        {
+            delete encoder;
+            encoder = NULL;
         }
     }
     av_register_all();

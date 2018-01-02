@@ -10,6 +10,7 @@ class KEncoder
 {
 public:
     KEncoder();
+    ~KEncoder();
     KErrors configure(InputParameter *pParameter);
 
 private:
@@ -20,6 +21,9 @@ private:
     int mFrameCount;
     int mWidth;
     int mHeight;
+
+    FILE *pFileIn;
+    FILE *pFileOut;
 };
 
 #endif
