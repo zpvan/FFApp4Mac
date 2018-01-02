@@ -1,18 +1,10 @@
 #include "stdio.h"
-#include "stdint.h"
 #include "unistd.h"
 #include "getopt.h"
 
 #include "KEncoder.h"
 #include "InputParameter.h"
 #include "KErrors.h"
-
-extern "C"
-{
-    #include "libavutil/imgutils.h"
-    #include "libavformat/avformat.h"
-    #include "libavutil/samplefmt.h"
-}
 
 const char *ENC = "enc";
 
@@ -99,6 +91,15 @@ int main(int argc, char **argv)
         if (res == NO_ERROR)
         {
             printf("配置编码器成功\n");
+            res = encoder->start();
+            if (res == NO_ERROR)
+            {
+                printf("开启编码器成功\n");
+            }
+            else
+            {
+                printf("开启编码器失败, error code: %d\n", res);
+            }
         } 
         else 
         {
@@ -111,5 +112,4 @@ int main(int argc, char **argv)
             encoder = NULL;
         }
     }
-    av_register_all();
 }

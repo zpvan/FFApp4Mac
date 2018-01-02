@@ -5,6 +5,12 @@
 #include "getopt.h"
 #include "InputParameter.h"
 #include "KErrors.h"
+#include "stdint.h"
+
+extern "C"
+{
+    #include "libavformat/avformat.h"
+}
 
 class KEncoder
 {
@@ -12,6 +18,7 @@ public:
     KEncoder();
     ~KEncoder();
     KErrors configure(InputParameter *pParameter);
+    KErrors start();
 
 private:
     char* mInputFileName;
@@ -24,6 +31,11 @@ private:
 
     FILE *pFileIn;
     FILE *pFileOut;
+
+    AVCodec *mCodec;
+    AVCodecContext *mCodecCtx;
+    AVFrame *mFrame;
+    AVPacket *mPacket;
 };
 
 #endif
