@@ -21,6 +21,9 @@ public:
     KErrors start();
 
 private:
+    void readYUV420PToAVFrame(); 
+    void readYUVData(int color);
+
     char* mInputFileName;
     char* mOutputFileName;
     int mBitRate;
@@ -35,7 +38,7 @@ private:
     AVCodec *mCodec;
     AVCodecContext *mCodecCtx;
     AVFrame *mFrame;
-    AVPacket *mPacket;
+    AVPacket mPacket;
 };
 
 #endif

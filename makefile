@@ -5,7 +5,7 @@
 ##########################################
 
 LIBDIR := ffmpeg-3.4.1-macos64-shared/bin/
-LIBS := avutil.55 avformat.57
+LIBS := avutil.55 avformat.57 avcodec.57
 INCLUDES := ffmpeg-3.4.1-macos64-dev/include/
 TARGET := main
 TARGETDIR := $(LIBDIR)
