@@ -39,6 +39,11 @@ KEncoder::~KEncoder()
         fclose(pFileOut);
         pFileOut = NULL;
     }
+    if (!mCodecCtx)
+    {
+        avcodec_close(mCodecCtx);
+        mCodecCtx = NULL;
+    }
 }
 
 KErrors KEncoder::configure(InputParameter *pParameter)
