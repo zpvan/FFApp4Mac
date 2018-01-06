@@ -24,7 +24,7 @@ RM-F := rm -f
 all: $(TARGET)
 
 main: Main.cpp
-	$(CC) Main.cpp KEncoder.cpp -o $(addprefix $(TARGETDIR), $(TARGET)) $(addprefix -L, $(LIBDIR)) $(addprefix -l, $(LIBS)) -I$(INCLUDES)
+	$(CC) Main.cpp KEncoder.cpp KDemuxer.cpp -o $(addprefix $(TARGETDIR), $(TARGET)) $(addprefix -L, $(LIBDIR)) $(addprefix -l, $(LIBS)) -I$(INCLUDES)
 
 clean:
 	$(RM-F) *.o

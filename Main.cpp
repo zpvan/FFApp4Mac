@@ -3,10 +3,12 @@
 #include "getopt.h"
 
 #include "KEncoder.h"
+#include "KDemuxer.h"
 #include "InputParameter.h"
 #include "KErrors.h"
 
 const char *ENC = "enc";
+const char *DMX = "dmx";
 
 struct option longopts[] = 
 {
@@ -20,6 +22,10 @@ struct option longopts[] =
     {"fc", required_argument, NULL, FRAMECOUNT},
     // 分辨率
     {"vr", required_argument, NULL, VIDEO_RESOLUTION},
+    // 输出视频es流
+    {"vo", required_argument, NULL, VIDEO_OUTPUT_FILE},
+    // 输出音频es流
+    {"ao", required_argument, NULL, AUDIO_OUTPUT_FILE},
 };
 
 int main(int argc, char **argv)
@@ -56,6 +62,14 @@ int main(int argc, char **argv)
                 parameter.mFrameCount = atoi(optarg);
                 break;
 
+            case VIDEO_OUTPUT_FILE:
+                parameter.mVideoOutputFileName = optarg;
+                break;
+
+            case AUDIO_OUTPUT_FILE:
+                parameter.mAudioOutputFileName = optarg;
+                break;
+
             case VIDEO_RESOLUTION:
                 char *resolution = optarg;
                 int length = strlen(resolution);
@@ -77,7 +91,6 @@ int main(int argc, char **argv)
                         parameter.mHeight = atoi(height);
                     }
                 }
-                
                 break;
         }
     }
@@ -111,5 +124,12 @@ int main(int argc, char **argv)
             delete encoder;
             encoder = NULL;
         }
+    }
+    else if (!strcmp(DMX, func))
+    {
+        printf("启动解复用器\n");
+        KErrors res = NO_ERROR;
+        KDemuxer *demuxer = new KDemuxer();
+        res = demuxer->configure(&parameter);
     }
 }
