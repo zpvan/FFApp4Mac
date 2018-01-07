@@ -5,6 +5,11 @@
 #include "KErrors.h"
 #include "InputParameter.h"
 
+extern "C"
+{
+	#include "libavformat/avformat.h"
+}
+
 class KDemuxer
 {
 public:
@@ -21,6 +26,11 @@ private:
 	FILE *pFileIn;
     FILE *pVideoFileOut;
     FILE *pAudioFileOut;
+
+    AVFormatContext *mFmtCxt;
+    AVStream *mSt;
+    AVCodecContext *mCodecCtx;
+    AVCodec *mCodec;
 };
 
 #endif
