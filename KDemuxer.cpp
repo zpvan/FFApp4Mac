@@ -13,7 +13,9 @@ KDemuxer::KDemuxer() :
     pAudioFileOut(NULL),
     mFmtCxt(NULL),
     mSt(NULL),
-    mCodecCtx(NULL)
+    mCodecCtx(NULL),
+    video_index(-1),
+    audio_index(-1)
 {
 	printf("new KDemuxer: %p\n", this);
 }
@@ -74,7 +76,6 @@ KErrors KDemuxer::configure(InputParameter *pParameter)
 		return ERROR_FF_FIND_STREAM_INFO;
 	}
 
-	int video_index = -1;
 	video_index = av_find_best_stream(mFmtCxt, (AVMediaType) AVMEDIA_TYPE_VIDEO, -1, -1, NULL, 0);
 	if (video_index >= 0)
 	{
@@ -85,7 +86,6 @@ KErrors KDemuxer::configure(InputParameter *pParameter)
 		printf("pix_fmt: %d, AV_PIX_FMT_YUV420P: %d\n", mCodecCtx->pix_fmt, AV_PIX_FMT_YUV420P);
 	}
 
-	int audio_index = -1;
 	audio_index = av_find_best_stream(mFmtCxt, (AVMediaType) AVMEDIA_TYPE_AUDIO, -1, -1, NULL, 0);
 	if (audio_index >= 0)
 	{
@@ -96,4 +96,38 @@ KErrors KDemuxer::configure(InputParameter *pParameter)
 	av_dump_format(mFmtCxt, 0, mInputFileName, 0);
 
 	return NO_ERROR;
+}
+
+KErrors KDemuxer::start()
+{
+	av_init_packet(&packet);
+	packet.data = NULL;
+	packet.size = 0;
+
+	while (av_read_frame(mFmtCxt, &packet) >= 0)
+	{
+		if (packet.stream_index == video_index)
+		{
+			if (pVideoFileOut)
+			{
+				fwrite(packet.data, 1, packet.size, pVideoFileOut);
+			}
+		} else if (packet.stream_index == audio_index)
+		{
+			if (pAudioFileOut)
+			{
+				fwrite(packet.data, 1, packet.size, pAudioFileOut);
+			}
+		}
+	}
+
+	if (pVideoFileOut)
+	{
+		fflush(pVideoFileOut);
+	}
+
+	if (pAudioFileOut)
+	{
+		fflush(pAudioFileOut);
+	}
 }

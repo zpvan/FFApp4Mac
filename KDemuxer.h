@@ -31,6 +31,10 @@ private:
     AVStream *mSt;
     AVCodecContext *mCodecCtx;
     AVCodec *mCodec;
+    AVPacket packet;
+
+    int video_index;
+    int audio_index;
 };
 
 #endif

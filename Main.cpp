@@ -131,5 +131,28 @@ int main(int argc, char **argv)
         KErrors res = NO_ERROR;
         KDemuxer *demuxer = new KDemuxer();
         res = demuxer->configure(&parameter);
+        if (res == NO_ERROR)
+        {
+            printf("配置解复用器成功\n");
+            res = demuxer->start();
+            if (res == NO_ERROR)
+            {
+                printf("开启解复用器成功\n");
+            }
+            else
+            {
+                printf("开启解复用器失败, error code: %d\n", res);
+            }
+        }
+        else 
+        {
+            printf("配置解复用器失败, error code: %d\n", res);
+        }
+
+        if (demuxer != NULL)
+        {
+            delete demuxer;
+            demuxer = NULL;
+        }
     }
 }
